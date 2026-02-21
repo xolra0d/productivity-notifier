@@ -13,15 +13,11 @@
     in
     {
       devShells.${system}.default = pkgs.mkShell {
-        # if need want to add crates, that provide bindings
-        # to external libs, e.g. for `glib` or `tch`, then
-        # 1. Add lib to buildInputs list
-        # 2. add after buildInputs: `nativeBuildInputs = [ pkgs.pkg-config ];` line
         buildInputs = with pkgs; [
           python312
         ];
-      };
+        nativeBuildInputs = [ pkgs.pkg-config ];
 
-      # for nix packages look: https://www.youtube.com/watch?v=Ss1IXtYnpsg
+      };
     };
 }

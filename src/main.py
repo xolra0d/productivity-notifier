@@ -15,7 +15,6 @@ async def health():
 
 
 @app.get("/start")
-@app.get("/unpause")
 async def start():
     match WorkingCounter.state:
         case ProgrammerState.AWAIT:
@@ -30,7 +29,6 @@ async def start():
 
 
 @app.get("/end")
-@app.get("/pause")
 async def end():
     match WorkingCounter.state:
         case ProgrammerState.AWAIT:
@@ -46,6 +44,7 @@ def query(sql: str):
     if isinstance(result, str):
         return {"ok": False, "error": result}
     return {"ok": True, "rows": result}
+
 
 @app.post("/working")
 async def working():

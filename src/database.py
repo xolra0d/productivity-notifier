@@ -26,6 +26,7 @@ class ProgrammerState(Enum):
     AWAIT = "A"
     WORK = "W"
 
+
 class WorkingCounter:
     state = ProgrammerState.AWAIT
     started_at = datetime.now()

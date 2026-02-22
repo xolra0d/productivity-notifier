@@ -2,8 +2,8 @@ from datetime import datetime, timedelta
 
 from fastapi import FastAPI
 
-from database import Database, ProgrammerState, WorkingCounter
-from middleware import HeaderSecretChecker
+from src.database import Database, ProgrammerState, WorkingCounter
+from src.middleware import HeaderSecretChecker
 
 app = FastAPI()
 app.add_middleware(HeaderSecretChecker)
@@ -11,7 +11,7 @@ app.add_middleware(HeaderSecretChecker)
 
 @app.get("/health")
 async def health():
-    return True
+    return {"Status": True}
 
 
 @app.get("/start")
@@ -25,7 +25,9 @@ async def start():
                 WorkingCounter.started_at += timedelta(hours=2)
                 ended_at = WorkingCounter.started_at
                 minutes = WorkingCounter.end()
-                Database.query(f"INSERT INTO performance(timestamp, minutes) VALUES ({ended_at.isoformat(sep=' ')}, {minutes})")
+                Database.query(
+                    f"INSERT INTO performance(timestamp, minutes) VALUES ({ended_at.isoformat(sep=' ')}, {minutes})"
+                )
 
 
 @app.get("/end")
@@ -38,7 +40,7 @@ async def end():
             Database.query(f"INSERT INTO performance(minutes) VALUES ({minutes})")
 
 
-@app.post("/query")
+@app.get("/query")
 def query(sql: str):
     result = Database.query(sql=sql)
     if isinstance(result, str):

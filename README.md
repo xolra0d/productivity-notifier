@@ -1,4 +1,4 @@
-Productivity Notifier
+Productivity Tracker
 ---
 
 It's impossible to explain the 

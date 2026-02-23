@@ -14,7 +14,7 @@ async def health() -> dict[str, bool]:
 
 
 @app.get("/start")
-async def start() -> None:
+async def start():
     match WorkingCounter.state:
         case ProgrammerState.AWAIT:
             WorkingCounter.start()
@@ -30,7 +30,7 @@ async def start() -> None:
 
 
 @app.get("/end")
-async def end() -> None:
+async def end():
     match WorkingCounter.state:
         case ProgrammerState.AWAIT:
             pass
@@ -48,7 +48,5 @@ def query(sql: str) -> dict[str, bool | str | list[tp.Any]]:
 
 
 @app.post("/working")
-async def working():
-    if WorkingCounter.state == ProgrammerState.WORK:
-        return True
-    return False
+async def working() -> bool:
+    return WorkingCounter.state == ProgrammerState.WORK
